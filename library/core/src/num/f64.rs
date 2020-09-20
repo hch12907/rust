@@ -797,6 +797,7 @@ impl f64 {
     /// # Examples
     ///
     /// ```
+    /// #![feature(num_as_ne_bytes)]
     /// let num = 12.5f64;
     /// let bytes = num.as_ne_bytes();
     /// assert_eq!(
@@ -811,9 +812,8 @@ impl f64 {
     #[unstable(feature = "float_as_bytes", issue = "64464")]
     #[inline]
     pub fn as_ne_bytes(&self) -> &[u8; 8] {
-        // SAFETY: `u64` is a plain old datatype so we can always transmute to it
-        let bits = unsafe { mem::transmute::<&f64, &u64>(self) };
-        bits.as_ne_bytes()
+        // SAFETY: `f64` is a plain old datatype so we can always transmute to it
+        unsafe { mem::transmute(self) }
     }
 
     /// Create a floating point value from its representation as a byte array in big endian.

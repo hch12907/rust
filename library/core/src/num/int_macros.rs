@@ -2068,7 +2068,7 @@ native byte order.
 # Examples
 
 ```
-#![feature(int_as_bytes)]
+#![feature(num_as_ne_bytes)]
 let num = ", $swap_op, stringify!($SelfT), ";
 let bytes = num.as_ne_bytes();
 assert_eq!(
@@ -2080,7 +2080,7 @@ assert_eq!(
     }
 );
 ```"),
-            #[unstable(feature = "int_as_bytes", issue = "64464")]
+            #[unstable(feature = "num_as_ne_bytes", issue = "64464")]
             #[inline]
             pub fn as_ne_bytes(&self) -> &[u8; mem::size_of::<Self>()] {
                 // SAFETY: integers are plain old datatypes so we can always transmute them to

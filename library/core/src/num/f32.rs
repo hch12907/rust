@@ -783,6 +783,7 @@ impl f32 {
     /// # Examples
     ///
     /// ```
+    /// #![feature(num_as_ne_bytes)]
     /// let num = 12.5f32;
     /// let bytes = num.as_ne_bytes();
     /// assert_eq!(
@@ -794,12 +795,11 @@ impl f32 {
     ///     }
     /// );
     /// ```
-    #[unstable(feature = "float_as_bytes", issue = "64464")]
+    #[unstable(feature = "num_as_ne_bytes", issue = "64464")]
     #[inline]
     pub fn as_ne_bytes(&self) -> &[u8; 4] {
-        // SAFETY: `u32` is a plain old datatype so we can always transmute to it
-        let bits = unsafe { mem::transmute::<&f32, &u32>(self) };
-        bits.as_ne_bytes()
+        // SAFETY: `f32` is a plain old datatype so we can always transmute to it
+        unsafe { mem::transmute(self) }
     }
 
     /// Create a floating point value from its representation as a byte array in big endian.
